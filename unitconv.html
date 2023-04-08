@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Unit Converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      select,
+      input[type="text"],
+      button {
+        font-size: 16px;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin: 5px;
+        width: 200px;
+        max-width: 100%;
+      }
+
+      select {
+        width: 220px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #2e8b57;
+      }
+
+      #output {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      .error {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+    <script>
+      function convert() {
+        const input = document.getElementById("input");
+        const output = document.getElementById("output");
+        const fromUnit = document.getElementById("fromUnit").value;
+        const toUnit = document.getElementById("toUnit").value;
+        const inputValue = parseFloat(input.value);
+
+        if (isNaN(inputValue)) {
+          output.innerHTML = '<span class="error">Invalid input</span>';
+          return;
+        }
+
+        let result;
+
+        // Conversion formulas
+        if (fromUnit === "meter" && toUnit === "feet") {
+          result = inputValue * 3.28084;
+        } else if (fromUnit === "feet" && toUnit === "meter") {
+          result = inputValue / 3.28084;
+        } else {
+          output.innerHTML = '<span class="error">Unsupported conversion</span>';
+          return;
+        }
+
+        // Display result
+        output.innerHTML = result.toFixed(2) + " " + toUnit;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Unit Converter</h1>
+    <form>
+      <label for="input">Input:</label>
+      <input type="text" id="input" />
+      <select id="fromUnit">
+        <option value="meter">Meter</option>
+        <option value="feet">Feet</option>
+      </select>
+      <label for="output">Output:</label>
+      <span id="output"></span>
+      <select id="toUnit">
+        <option value="meter">Meter</option>
+        <option value="feet">Feet</option>
+      </select>
+      <button onclick="convert()">Convert</button>
+    </form>
+  </body>
+</html>
